@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-/1Tx6/...M+KkJ1vh7Y2Z1Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>토정의 롤 내전 팀 랜덤 생성기</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #93c5fd, #fbcfe8);
+    color: #1e293b;
+    margin: 0;
+    padding: 2rem;
+    min-height: 100vh;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.container {
+    max-width: 960px;
+    margin: auto;
+    background: white;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 1s ease;
+}
+
+h2 {
+    text-align: center;
+    color: #0f172a;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: bold;
+    animation: fadeIn 1s ease;
+}
+
+.mode-select label {
+    margin-right: 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+    animation: fadeIn 1.2s ease;
+}
+
+.player-input-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.player-input {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    flex: 1;
+}
+
+.player-input input,
+.player-input select {
+    padding: 0.8rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.player-input input:focus,
+.player-input select:focus {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+    outline: none;
+    border-color: #3b82f6;
+}
+
+button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 0.75rem;
+    background: linear-gradient(to right, #3b82f6, #6366f1);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0.25rem;
+    transition: all 0.3s ease;
+    animation: fadeIn 1s ease;
+}
+
+button:hover {
+    background: linear-gradient(to right, #2563eb, #4f46e5);
+    transform: translateY(-3px) scale(1.02);
+}
+
+.remove-button {
+    background: #f87171;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+    border-radius: 0.75rem;
+    align-self: start;
+}
+
+.remove-button:hover {
+    background: #ef4444;
+}
+
+.team-card {
+    margin-top: 2.5rem;
+    padding: 2rem;
+    border-radius: 1.5rem;
+    background: #f8fafc;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1s ease;
+}
+
+h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #1e40af;
+    margin-bottom: 1rem;
+}
+
+.avg {
+    font-size: 1rem;
+    color: #64748b;
+    font-weight: normal;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+    animation: fadeInUp 1s ease;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 1rem;
+    border: 1px solid #cbd5e1;
+    text-align: center;
+    background: white;
+    transition: background-color 0.3s;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #e2e8f0;
+}
+
+.styled-table thead {
+    background-color: #e0f2fe;
+    color: #0c4a6e;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.75; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+
+.blue-team {
+    background: linear-gradient(to right, #dbeafe, #bfdbfe);
+    border-left: 8px solid #3b82f6;
+}
+.red-team {
+    background: linear-gradient(to right, #fecaca, #fca5a5);
+    border-left: 8px solid #ef4444;
+}
+
+
+@keyframes highlight {
+    0% { box-shadow: 0 0 0px rgba(255, 215, 0, 0); }
+    50% { box-shadow: 0 0 25px 10px rgba(255, 215, 0, 0.6); }
+    100% { box-shadow: 0 0 0px rgba(255, 215, 0, 0); }
+}
+.team-card.highlight {
+    animation: highlight 1.2s ease;
+}
+
+
+.mode-select {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.mode-select input[type="radio"] {
+    display: none;
+}
+
+.mode-select label {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 1rem;
+    background: #f1f5f9;
+    cursor: pointer;
+    font-weight: bold;
+    color: #1e293b;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mode-select input[type="radio"]:checked + label {
+    background: linear-gradient(to right, #60a5fa, #818cf8);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js">
+function describe() {
+    document.getElementById("descriptionModal").style.display = "flex";
+}
+function closeDescription() {
+    document.getElementById("descriptionModal").style.display = "none";
+}
+
+</script>
+</head>
+<body>
+    <div class="container">
+        <h2><i class="fas fa-dice"></i> 토정의 롤 내전</h2>
+
+        <div class="mode-select">
+            <input type="radio" name="mode" id="modeA" value="A" checked onchange="switchMode()"><label for="modeA">소환사 협곡</label>
+            <input type="radio" name="mode" id="modeB" value="B" onchange="switchMode()"><label for="modeB">칼바람 나락</label>
+        </div>
+
+        <br>
+       
+        <div class="input-group" id="playerInputs">
+            <div class="player-input-wrapper">
+                <div class="player-input">
+                    <input type="text" placeholder="이름" class="name">
+                    <select class="primary-role">
+                        <option value="">주 라인</option>
+                        <option value="탑">탑</option>
+                        <option value="정글">정글</option>
+                        <option value="미드">미드</option>
+                        <option value="원딜">원딜</option>
+                        <option value="서포터">서포터</option>
+                        <option value="모두">모두</option>
+                    </select>
+                    <select class="secondary-role">
+                        <option value="">부 라인</option>
+                        <option value="탑">탑</option>
+                        <option value="정글">정글</option>
+                        <option value="미드">미드</option>
+                        <option value="원딜">원딜</option>
+                        <option value="서포터">서포터</option>
+                        <option value="모두">모두</option>
+                    </select>
+                    <select class="tier">
+                        <option value="">티어</option>
+                        <option value="10">챌린저</option>
+                        <option value="9">그랜드마스터</option>
+                        <option value="8">마스터</option>
+                        <option value="7">다이아몬드</option>
+                        <option value="6">에메랄드</option>
+                        <option value="5">플래티넘</option>
+                        <option value="4">골드</option>
+                        <option value="3">실버</option>
+                        <option value="2">브론즈</option>
+                        <option value="1">아이언</option>
+                        <option value="0">언랭크</option>
+                    </select>
+                </div>
+                <button class="remove-button" onclick="removePlayerInput(this)"><i class="fas fa-trash-alt"></i> 삭제</button>
+            </div>
+        </div>
+
+        <button onclick="addPlayerInput()"><i class="fas fa-user-plus"></i> 플레이어 추가</button>
+        <button onclick="generateTeams()" id="generateBtn"><i class="fas fa-random"></i> 팀 나누기</button>
+		<button onclick="exportPlayers()"><i class="fas fa-download"></i> 내보내기</button>
+		<input type="file" id="importFile" accept=".json" style="display:none" onchange="importPlayers(event)" />
+		<button onclick="document.getElementById('importFile').click()"><i class="fas fa-upload"></i> 가져오기</button>
+
+        <div class="team" id="blueTeam"><h3>블루팀</h3></div>
+        <div class="team" id="redTeam"><h3>레드팀</h3></div>
+    </div>
+
+    <script>
+        const roles = ['탑', '정글', '미드', '원딜', '서포터'];
+
+        
+function updateTitleIcon(mode) {
+    const icon = document.querySelector("h2 i");
+    if (!icon) return;
+    icon.className = mode === 'A' ? "fas fa-dice" : "fas fa-snowflake";
+}
+
+
+function switchMode() {
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            const tierInputs = document.querySelectorAll('.tier');
+            const primaryInputs = document.querySelectorAll('.primary-role');
+            const secondaryInputs = document.querySelectorAll('.secondary-role');
+
+            updateTitleIcon(mode);
+    const show = mode === 'A';
+            tierInputs.forEach(input => input.style.display = show ? 'block' : 'none');
+            primaryInputs.forEach(input => input.style.display = show ? 'block' : 'none');
+            secondaryInputs.forEach(input => input.style.display = show ? 'block' : 'none');
+        }
+
+        
+function getRoleIcon(role) {
+    const icons = {
+        '탑': '<i class="fas fa-mountain"></i>',
+        '정글': '<i class="fas fa-leaf"></i>',
+        '미드': '<i class="fas fa-fire-alt"></i>',
+        '원딜': '<i class="fas fa-bullseye"></i>',
+        '서포터': '<i class="fas fa-hands-helping"></i>'
+    };
+    return icons[role] || '';
+}
+
+
+
+function getTierIcon(tier) {
+    const icons = {
+        10: '<i class="fas fa-crown" style="color:#eab308;"></i>',          // 챌린저
+        9: '<i class="fas fa-chess-king" style="color:#f59e0b;"></i>',      // 그랜드마스터
+        8: '<i class="fas fa-chess-queen" style="color:#fbbf24;"></i>',     // 마스터
+        7: '<i class="fas fa-gem" style="color:#60a5fa;"></i>',             // 다이아몬드
+        6: '<i class="fas fa-leaf" style="color:#34d399;"></i>',            // 에메랄드
+        5: '<i class="fas fa-star" style="color:#a855f7;"></i>',            // 플래티넘
+        4: '<i class="fas fa-medal" style="color:#facc15;"></i>',           // 골드
+        3: '<i class="fas fa-shield-alt" style="color:#cbd5e1;"></i>',      // 실버
+        2: '<i class="fas fa-hammer" style="color:#a16207;"></i>',          // 브론즈
+        1: '<i class="fas fa-bolt" style="color:#6b7280;"></i>',            // 아이언
+        0: '<i class="fas fa-question-circle" style="color:#9ca3af;"></i>'  // 언랭크
+    };
+    return icons[tier] || '';
+}
+
+
+function getTierName(tier) {
+            const tiers = ['언랭크', '아이언', '브론즈', '실버', '골드', '플래티넘', '에메랄드', '다이아몬드', '마스터', '그랜드마스터', '챌린저'];
+            return tiers[tier] || '정보 없음';
+        }
+
+        function addPlayerInput() {
+            const container = document.getElementById("playerInputs");
+            const div = document.createElement("div");
+            div.classList.add("player-input-wrapper");
+            div.innerHTML = `
+              <div class="player-input">
+                <input type="text" placeholder="이름" class="name" />
+                <select class="primary-role">
+                  <option value="">주 라인</option>
+                  <option value="탑">탑</option>
+                  <option value="정글">정글</option>
+                  <option value="미드">미드</option>
+                  <option value="원딜">원딜</option>
+                  <option value="서포터">서포터</option>
+                  <option value="모두">모두</option>
+                </select>
+                <select class="secondary-role">
+                  <option value="">부 라인</option>
+                  <option value="탑">탑</option>
+                  <option value="정글">정글</option>
+                  <option value="미드">미드</option>
+                  <option value="원딜">원딜</option>
+                  <option value="서포터">서포터</option>
+                  <option value="모두">모두</option>
+                </select>
+                <select class="tier">
+                  <option value="">티어</option>
+                  <option value="10">챌린저</option>
+                  <option value="9">그랜드마스터</option>
+                  <option value="8">마스터</option>
+                  <option value="7">다이아몬드</option>
+                  <option value="6">에메랄드</option>
+                  <option value="5">플래티넘</option>
+                  <option value="4">골드</option>
+                  <option value="3">실버</option>
+                  <option value="2">브론즈</option>
+                  <option value="1">아이언</option>
+                  <option value="0">언랭크</option>
+                </select>
+              </div>
+              <button class="remove-button" onclick="removePlayerInput(this)"><i class="fas fa-trash-alt"></i> 삭제</button>
+            `;
+        container.appendChild(div);
+        }
+        
+        function removePlayerInput(button) {
+            const container = document.getElementById("playerInputs");
+            if (container.children.length > 1) {
+                button.parentElement.remove();
+            } else {
+                alert("최소 1명의 플레이어는 있어야 합니다.");
+            }
+        }
+        
+        function assignRoles(players) {
+            const assigned = {};
+            const usedPlayers = new Set();
+
+            const tryAssign = (role, conditionFn) => {
+                const player = players.find(p => !usedPlayers.has(p) && conditionFn(p, role));
+                if (player) {
+                    assigned[role] = player;
+                    usedPlayers.add(player);
+                }
+            };
+
+            for (const role of roles) {
+                tryAssign(role, (p, r) => p.primaryRole === r);
+            }
+
+            for (const role of roles) {
+                if (!assigned[role]) {
+                    tryAssign(role, (p, r) => p.secondaryRole === r || p.primaryRole === '모두' || p.secondaryRole === '모두');
+                }
+            }
+
+            const unassignedRoles = roles.filter(role => !assigned[role]);
+            const remainingPlayers = players.filter(p => !usedPlayers.has(p)).sort((a, b) => b.skill - a.skill);
+
+            for (const role of unassignedRoles) {
+                if (remainingPlayers.length > 0) {
+                    assigned[role] = remainingPlayers.shift();
+                }
+            }
+
+            return assigned;
+        }
+
+        function generateTeams() {
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            const inputs = document.querySelectorAll(".player-input");
+            const players = [];
+
+            inputs.forEach(input => {
+                const name = input.querySelector(".name").value.trim();
+                const skill = parseInt(input.querySelector(".tier")?.value);
+                const primaryRole = input.querySelector(".primary-role")?.value.trim().toLowerCase();
+                const secondaryRole = input.querySelector(".secondary-role")?.value.trim().toLowerCase();
+                if (name && !isNaN(skill)) players.push({ name, skill, primaryRole, secondaryRole });
+            });
+
+            if (players.length < 2) {
+                alert("최소 2명의 플레이어가 필요합니다.");
+                return;
+            }
+
+            players.sort(() => Math.random() - 0.5);
+            const half = Math.floor(players.length / 2);
+            const team1players = players.slice(0, half);
+            const team2players = players.slice(half);
+
+            if (mode === 'A') {
+                if (players.length < 10) {
+                    alert("A 경기는 10명의 플레이어가 필요합니다. (팀당 5명)");
+                    return;
+                }
+
+                const roles1 = assignRoles(team1players);
+                const roles2 = assignRoles(team2players);
+
+                const avg1 = Object.values(roles1).reduce((sum, p) => sum + p.skill, 0) / 5;
+                const avg2 = Object.values(roles2).reduce((sum, p) => sum + p.skill, 0) / 5;
+
+                document.getElementById("blueTeam").innerHTML = renderTeamTable("블루팀", roles1, avg1, "blue-team");
+                document.getElementById("redTeam").innerHTML = renderTeamTable("레드팀", roles2, avg2, "red-team");
+
+
+document.getElementById("blueTeam").scrollIntoView({ behavior: 'smooth' });
+setTimeout(() => {
+    const cards = document.querySelectorAll(".team-card");
+    cards.forEach(card => {
+        card.classList.add("highlight");
+        setTimeout(() => card.classList.remove("highlight"), 1500);
+    });
+}, 500);
+
+
+launchConfetti();
+            } else {
+                const renderList = (teamName, members, colorClass = '') => {
+                    const avg = members.reduce((sum, p) => sum + p.skill, 0) / members.length;
+                    return `
+                        <div class="team-card ${colorClass}">
+                            <h3>${teamName} <span class="avg">(평균 티어: ${avg.toFixed(2)})</span></h3>
+                            <table class="styled-table">
+                                <thead><tr><th>이름</th><th>티어</th></tr></thead>
+                                <tbody>
+                                    ${members.map(p => `<tr><td>${p.name}</td><td>${getTierIcon(p.skill)} ${getTierName(p.skill)}</td></tr>`).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                };
+
+                document.getElementById("blueTeam").innerHTML = renderList("블루팀", team1players, "blue-team");
+                document.getElementById("redTeam").innerHTML = renderList("레드팀", team2players, "red-team");
+
+
+document.getElementById("blueTeam").scrollIntoView({ behavior: 'smooth' });
+setTimeout(() => {
+    const cards = document.querySelectorAll(".team-card");
+    cards.forEach(card => {
+        card.classList.add("highlight");
+        setTimeout(() => card.classList.remove("highlight"), 1500);
+    });
+}, 500);
+
+
+launchConfetti();
+            }
+        }
+
+        function renderTeamTable(teamName, assignments, teamAvg, colorClass) {
+            return `
+                <div class="team-card ${colorClass}">
+                    <h3>${teamName} <span class="avg">(평균 티어: ${teamAvg.toFixed(2)})</span></h3>
+                    <table class="styled-table">
+                        <thead>
+                            <tr><th>이름</th><th>라인</th><th>티어</th></tr>
+                        </thead>
+                        <tbody>
+                            ${roles.map(role => {
+                                const p = assignments[role];
+                                return `<tr><td>${p?.name || '없음'}</td><td>${getRoleIcon(role)} ${role}</td><td>${getTierIcon(p?.skill)} ${getTierName(p?.skill)}</td></tr>`;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        window.onload = switchMode;
+
+function exportPlayers() {
+    const data = localStorage.getItem("players");
+    if (!data) {
+        alert("저장된 플레이어 정보가 없습니다.");
+        return;
+    }
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "players.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function importPlayers(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const json = JSON.parse(e.target.result);
+            localStorage.setItem("players", JSON.stringify(json));
+            loadFromLocalStorage();
+        } catch (err) {
+            alert("올바르지 않은 파일입니다.");
+        }
+    };
+    reader.readAsText(file);
+}
+
+
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+        const activeEl = document.activeElement;
+        if (activeEl.classList.contains("name") || activeEl.tagName === "SELECT") {
+            e.preventDefault();
+            addPlayerInput();
+        }
+    }
+});
+
+function validateNameInput() {
+    const names = Array.from(document.querySelectorAll(".name")).map(el => el.value.trim());
+    const duplicates = names.filter((name, index) => name && names.indexOf(name) !== index);
+    if (duplicates.length > 0) {
+        alert(`이름 "${duplicates[0]}" 이(가) 중복됩니다. 고유한 이름을 입력해주세요.`);
+        document.querySelectorAll(".name").forEach(el => {
+            if (el.value.trim() === duplicates[0]) el.value = "";
+        });
+    }
+}
+document.addEventListener("input", function (e) {
+    if (e.target.classList.contains("name")) {
+        validateNameInput();
+    }
+});
+
+function saveToLocalStorage() {
+    const inputs = document.querySelectorAll(".player-input");
+    const players = [];
+    inputs.forEach(input => {
+        players.push({
+            name: input.querySelector(".name").value.trim(),
+            primary: input.querySelector(".primary-role").value,
+            secondary: input.querySelector(".secondary-role").value,
+            tier: input.querySelector(".tier").value
+        });
+    });
+    localStorage.setItem("players", JSON.stringify(players));
+}
+
+function loadFromLocalStorage() {
+    const saved = localStorage.getItem("players");
+    if (!saved) return;
+    const players = JSON.parse(saved);
+    document.getElementById("playerInputs").innerHTML = "";
+    players.forEach(p => {
+        const container = document.getElementById("playerInputs");
+        const div = document.createElement("div");
+        div.classList.add("player-input-wrapper");
+        div.innerHTML = `
+          <div class="player-input">
+            <input type="text" placeholder="이름" class="name" value="${p.name}" />
+            <select class="primary-role">
+              <option value="">주 라인</option>
+              <option value="탑">탑</option>
+              <option value="정글">정글</option>
+              <option value="미드">미드</option>
+              <option value="원딜">원딜</option>
+              <option value="서포터">서포터</option>
+              <option value="모두">모두</option>
+            </select>
+            <select class="secondary-role">
+              <option value="">부 라인</option>
+              <option value="탑">탑</option>
+              <option value="정글">정글</option>
+              <option value="미드">미드</option>
+              <option value="원딜">원딜</option>
+              <option value="서포터">서포터</option>
+              <option value="모두">모두</option>
+            </select>
+            <select class="tier">
+              <option value="">티어</option>
+              <option value="10">챌린저</option>
+              <option value="9">그랜드마스터</option>
+              <option value="8">마스터</option>
+              <option value="7">다이아몬드</option>
+              <option value="6">에메랄드</option>
+              <option value="5">플래티넘</option>
+              <option value="4">골드</option>
+              <option value="3">실버</option>
+              <option value="2">브론즈</option>
+              <option value="1">아이언</option>
+              <option value="0">언랭크</option>
+            </select>
+          </div>
+          <button class="remove-button" onclick="removePlayerInput(this)"><i class="fas fa-trash-alt"></i> 삭제</button>
+        `;
+        container.appendChild(div);
+        const selects = div.querySelectorAll("select");
+        selects[0].value = p.primary;
+        selects[1].value = p.secondary;
+        selects[2].value = p.tier;
+    });
+    switchMode(); // 모드에 따라 보이기/숨기기 반영
+}
+
+document.addEventListener("input", saveToLocalStorage);
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("remove-button") || e.target.innerText.includes("추가")) {
+        setTimeout(saveToLocalStorage, 100); // 버튼 클릭 이후 DOM 변경을 기다림
+    }
+});
+
+
+// Confetti Effect
+function launchConfetti() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'confettiCanvas';
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '9999';
+    canvas.style.pointerEvents = 'none';
+    document.body.appendChild(canvas);
+
+    const confetti = window.confetti.create(canvas, { resize: true, useWorker: true });
+    confetti({
+        particleCount: 200,
+        spread: 160,
+        origin: { y: 0.6 }
+    });
+
+    setTimeout(() => {
+        document.body.removeChild(canvas);
+    }, 3000);
+}
+
+
+window.onload = function () {
+
+document.querySelector('button[onclick="generateTeams()"]').onclick = function() {
+    document.getElementById("teamLoader").style.display = "flex";
+    setTimeout(() => {
+        generateTeams();
+        document.getElementById("teamLoader").style.display = "none";
+    }, 1500);
+};
+
+    switchMode();
+    loadFromLocalStorage();
+};
+
+    
+function describe() {
+    document.getElementById("descriptionModal").style.display = "flex";
+}
+function closeDescription() {
+    document.getElementById("descriptionModal").style.display = "none";
+}
+
+</script>
+
+<div id="teamLoader" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.95); z-index:9999; display:none; align-items:center; justify-content:center; flex-direction:column; animation: fadeIn 0.5s ease;">
+    <div style="text-align:center;">
+        <img src="https://brand.riotgames.com/static/a91000434ed683358004b85c95d43ce0/8a20a/lol-logo.png" alt="LoL Logo" style="width:80px; height:80px; margin-bottom:1rem; animation: pulse 1.5s infinite;">
+        <p style="font-size:1.75rem; font-weight:bold; color:#1e3a8a; animation: fadeInUp 1s ease;">팀을 나누는 중...</p>
+    </div>
+</div>
+
+<div id="descriptionModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:10000; display:flex; align-items:center; justify-content:center;">
+  <div style="background:white; padding:2rem; border-radius:1rem; max-width:600px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.2); position:relative;">
+    <h2 style="margin-bottom:1rem;">⭐ 토정의 롤 내전 ⭐</h2>
+    <p style="font-size:1rem; line-height:1.5;">
+      이 도구는 내전 팀을 공정하게 나누기 위한 생성기입니다.<br><br>
+      <strong>소환사 협곡</strong> 모드는 라인과 티어를 기반으로 5:5 팀을 구성하고,<br>
+      <strong>칼바람 나락</strong> 모드는 라인 없이 무작위로 인원을 나눕니다.<br><br>
+      팀을 나눈 후 평균 티어와 역할 정보를 확인할 수 있습니다.
+    </p>
+    <button onclick="closeDescription()" style="margin-top:1.5rem; padding:0.6rem 1.2rem; background:#3b82f6; color:white; border:none; border-radius:0.5rem; cursor:pointer;">닫기</button>
+  </div>
+</div>
+</body>
+
+
+
+</html>

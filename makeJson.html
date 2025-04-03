@@ -117,6 +117,7 @@
     <button id="convertBtn">변환</button>
     <button id="goExcel">시참 리스트 보러가기</button>
     <button id="goTeamGen">팀 랜덤 생성기 바로가기</button>
+	<button id="copyUrlButton">시참 입력 URL 복사</button>
     <a id="downloadLink" style="display:none;">다운로드</a>
     <h2>결과물</h2>
     <pre id="outputJson"></pre>
@@ -169,16 +170,25 @@
       downloadLink.style.display = "block";
     });
 
-    // goExcel 버튼 클릭 시 새 창에서 시참 리스트 URL 열기
     document.getElementById("goExcel").addEventListener("click", function() {
       window.open("https://docs.google.com/spreadsheets/d/1Ugpc_DEMxcmhvJkPdBal9ee8LKGPP3mzziCu4R0pyow/edit?gid=755113823#gid=755113823", "_blank");
     });
 
-    // goTeamGen 버튼 클릭 시 새 창에서 팀 랜덤 생성기 URL 열기
     document.getElementById("goTeamGen").addEventListener("click", function() {
       window.open("https://easthoon1996.github.io/tojeong_lol/", "_blank");
     });
     
+	document.getElementById('copyUrlButton').addEventListener('click', function() {
+		const url = "https://docs.google.com/forms/d/1WVWoyToTbV_7ZZfKC8dU1csg-uJ9YfkhkbErXCYwPS4/edit";
+		navigator.clipboard.writeText(url)
+		.then(() => {
+			alert("URL이 클립보드에 복사되었습니다!");
+		})
+		.catch(err => {
+			console.error("복사 실패: ", err);
+		});
+	});
+	
     function describe() {
       document.getElementById("descriptionModal").style.display = "flex";
     }
@@ -196,6 +206,8 @@
         <strong>화면의 첫번째 입력 박스</strong>에 붙여넣으신 후에<br>
         변환 및 다운로드를 눌러주시면 됩니다.<br><br>
         변환된 파일을 팀 뽑기 도구에서 가져오기 해주세요.<br>
+        <a href="https://docs.google.com/spreadsheets/d/1Ugpc_DEMxcmhvJkPdBal9ee8LKGPP3mzziCu4R0pyow/edit?gid=755113823#gid=755113823" target="_blank">명단 리스트 확인</a>
+        <a href="https://easthoon1996.github.io/tojeong_lol/" target="_blank">내전 팀 생성기</a>
       </p>
       <button onclick="closeDescription()" style="margin-top:1.5rem; padding:0.6rem 1.2rem; background:#3b82f6; color:white; border:none; border-radius:0.5rem; cursor:pointer;">닫기</button>
     </div>

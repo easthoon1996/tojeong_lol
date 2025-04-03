@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>토정의 롤 내전 - 엑셀 명단 변환기</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-/1Tx6/...M+KkJ1vh7Y2Z1Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Reset 및 글로벌 스타일 */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #93c5fd, #fbcfe8);
+      color: #1e293b;
+      margin: 0;
+      padding: 2rem;
+      min-height: 100vh;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 960px;
+      margin: auto;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 1s ease;
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    h2 {
+      color: #0f172a;
+      font-size: 2rem;
+      font-weight: bold;
+      animation: fadeIn 1s ease;
+    }
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      resize: vertical;
+      margin-bottom: 1rem;
+    }
+    button {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 0.75rem;
+      background: linear-gradient(to right, #3b82f6, #6366f1);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 0.25rem 0;
+      transition: all 0.3s ease;
+      animation: fadeIn 1s ease;
+      width: 100%;
+      display: block;
+    }
+    button:hover {
+      background: linear-gradient(to right, #2563eb, #4f46e5);
+      transform: translateY(-3px) scale(1.02);
+    }
+    a#downloadLink {
+      display: block;
+      text-align: center;
+      padding: 0.8rem 1.5rem;
+      border-radius: 0.75rem;
+      background: linear-gradient(to right, #10b981, #3b82f6);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 0.25rem 0;
+      transition: all 0.3s ease;
+      animation: fadeIn 1s ease;
+      width: 100%;
+    }
+    a#downloadLink:hover {
+      background: linear-gradient(to right, #059669, #2563eb);
+      transform: translateY(-3px) scale(1.02);
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 15px;
+      border-left: 3px solid #3b82f6;
+      overflow: auto;
+      border-radius: 0.75rem;
+      margin-top: 20px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body onload="describe()">
+  <div class="container">
+    <h1>토정의 롤 내전</h1>
+    <h2>엑셀 명단 변환기</h2>
+    <textarea id="inputData" rows="10">
+	여기에 엑셀 데이터를 복사해서 붙여넣으세요
+    </textarea>
+    <button id="convertBtn">변환</button>
+    <button id="goExcel">시참 리스트 보러가기</button>
+    <button id="goTeamGen">팀 랜덤 생성기 바로가기</button>
+    <a id="downloadLink" style="display:none;">다운로드</a>
+    <h2>결과물</h2>
+    <pre id="outputJson"></pre>
+  </div>
+  <script>
+    // tier 값 치환용 매핑 객체
+    var tierMapping = {
+      "챌린저": 10,
+      "그랜드마스터": 9,
+      "마스터": 8,
+      "다이아몬드": 7,
+      "에메랄드": 6,
+      "플래티넘": 5,
+      "골드": 4,
+      "실버": 3,
+      "브론즈": 2,
+      "아이언": 1,
+      "언랭크": 0
+    };
+
+    document.getElementById("convertBtn").addEventListener("click", function() {
+      var inputText = document.getElementById("inputData").value;
+      var lines = inputText.trim().split('\n');
+      var result = [];
+
+      lines.forEach(function(line) {
+        if (line.trim() === "") return;
+        var columns = line.split('\t');
+        var originalTier = columns[3].trim();
+        var convertedTier = tierMapping.hasOwnProperty(originalTier) ? tierMapping[originalTier] : originalTier;
+
+        var obj = {
+          name: columns[0].trim(),
+          primary: columns[1].trim(),
+          secondary: columns[2].trim(),
+          tier: convertedTier
+        };
+        result.push(obj);
+      });
+
+      var jsonOutput = JSON.stringify(result, null, 2);
+      document.getElementById("outputJson").textContent = jsonOutput;
+      
+      var blob = new Blob([jsonOutput], {type: "application/json"});
+      var url = URL.createObjectURL(blob);
+      
+      var downloadLink = document.getElementById("downloadLink");
+      downloadLink.href = url;
+      downloadLink.download = "tojeong_lol_team_list.json";
+      downloadLink.style.display = "block";
+    });
+
+    // goExcel 버튼 클릭 시 새 창에서 시참 리스트 URL 열기
+    document.getElementById("goExcel").addEventListener("click", function() {
+      window.open("https://docs.google.com/spreadsheets/d/1Ugpc_DEMxcmhvJkPdBal9ee8LKGPP3mzziCu4R0pyow/edit?gid=755113823#gid=755113823", "_blank");
+    });
+
+    // goTeamGen 버튼 클릭 시 새 창에서 팀 랜덤 생성기 URL 열기
+    document.getElementById("goTeamGen").addEventListener("click", function() {
+      window.open("https://easthoon1996.github.io/tojeong_lol/", "_blank");
+    });
+    
+    function describe() {
+      document.getElementById("descriptionModal").style.display = "flex";
+    }
+    function closeDescription() {
+      document.getElementById("descriptionModal").style.display = "none";
+    }
+  </script>
+  
+  <div id="descriptionModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:10000; align-items:center; justify-content:center;">
+    <div style="background:white; padding:2rem; border-radius:1rem; max-width:600px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.2);">
+      <h2 style="margin-bottom:1rem;">⭐ 토정의 롤 내전 ⭐</h2>
+      <p style="font-size:1rem; line-height:1.5;">
+        이 도구는 "토정의 롤 내전 참가 리스트" 엑셀을 변환해주는 도구입니다.<br><br>
+        엑셀에서 <strong>참가자들의 아이디부터 티어</strong>를 전체 복사 후<br>
+        <strong>화면의 첫번째 입력 박스</strong>에 붙여넣으신 후에<br>
+        변환 및 다운로드를 눌러주시면 됩니다.<br><br>
+        변환된 파일을 팀 뽑기 도구에서 가져오기 해주세요.<br>
+        <a href="https://docs.google.com/spreadsheets/d/1Ugpc_DEMxcmhvJkPdBal9ee8LKGPP3mzziCu4R0pyow/edit?gid=755113823#gid=755113823" target="_blank">명단 리스트 확인</a>
+        <a href="https://easthoon1996.github.io/tojeong_lol/" target="_blank">내전 팀 생성기</a>
+      </p>
+      <button onclick="closeDescription()" style="margin-top:1.5rem; padding:0.6rem 1.2rem; background:#3b82f6; color:white; border:none; border-radius:0.5rem; cursor:pointer;">닫기</button>
+    </div>
+  </div>
+</body>
+</html>

@@ -460,13 +460,25 @@ function getTierName(tier) {
             const inputs = document.querySelectorAll(".player-input");
             const players = [];
 
-            inputs.forEach(input => {
-                const name = input.querySelector(".name").value.trim();
-                const skill = parseInt(input.querySelector(".tier")?.value);
-                const primaryRole = input.querySelector(".primary-role")?.value.trim().toLowerCase();
-                const secondaryRole = input.querySelector(".secondary-role")?.value.trim().toLowerCase();
-                if (name && !isNaN(skill)) players.push({ name, skill, primaryRole, secondaryRole });
-            });
+	inputs.forEach(input => {
+		const name = input.querySelector(".name").value.trim();
+		let skill = parseInt(input.querySelector(".tier")?.value);
+		const primaryRole = input.querySelector(".primary-role")?.value.trim().toLowerCase();
+		const secondaryRole = input.querySelector(".secondary-role")?.value.trim().toLowerCase();
+		
+		if (name) {
+			if (mode === 'B') { // "칼바람 나락" 모드에서는 티어 체크 없이 진행
+				if (isNaN(skill)) {
+					skill = 0; // 티어 입력이 없으면 0 (언랭크)로 처리
+				}
+				players.push({ name, skill, primaryRole, secondaryRole });
+				} else { // 소환사 협곡 모드에서는 기존대로 티어 입력이 있어야 함
+				if (!isNaN(skill)) {
+					players.push({ name, skill, primaryRole, secondaryRole });
+				}
+			}
+		}
+	});
 
             if (players.length < 2) {
                 alert("최소 2명의 플레이어가 필요합니다.");
@@ -509,15 +521,15 @@ launchConfetti();
                 const renderList = (teamName, members, colorClass = '') => {
                     const avg = members.reduce((sum, p) => sum + p.skill, 0) / members.length;
                     return `
-                        <div class="team-card ${colorClass}">
-                            <h3>${teamName} <span class="avg">(평균 티어: ${avg.toFixed(2)})</span></h3>
-                            <table class="styled-table">
-                                <thead><tr><th>이름</th><th>티어</th></tr></thead>
-                                <tbody>
-                                    ${members.map(p => `<tr><td>${p.name}</td><td>${getTierIcon(p.skill)} ${getTierName(p.skill)}</td></tr>`).join('')}
-                                </tbody>
-                            </table>
-                        </div>
+			<div class="team-card ${colorClass}">
+				<h3>${teamName}</h3>
+				<table class="styled-table">
+					<thead><tr><th>이름</th></tr></thead>
+					<tbody>
+						${members.map(p => `<tr><td>${p.name}</td></tr>`).join('')}
+					</tbody>
+				</table>
+			</div>
                     `;
                 };
 

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -428,10 +429,32 @@
                     alert("소환사 협곡은 10명의 플레이어가 필요합니다. (팀당 5명)");
                     return;
                 }
-                players.sort(() => Math.random() - 0.5);
-                const half = Math.floor(players.length / 2);
-                const team1players = players.slice(0, half);
-                const team2players = players.slice(half);
+                // "토정" 플레이어를 players 배열 어디에서든 찾아서 제거
+                const tojeongIndex = players.findIndex(p => p.name === "토정");
+                if (tojeongIndex === -1) {
+                    alert("플레이어 목록에 '토정'이 없습니다. 첫 번째 플레이어는 반드시 '토정'이어야 합니다.");
+                    return;
+                }
+                const tojeongPlayer = players.splice(tojeongIndex, 1)[0];
+                let mainPlayers = [];
+                let backupPlayers = [];
+                // 플레이어 수가 11명 이상이면 메인 10명(토정 + 나머지 9명)과 후보로 분리
+                if (players.length >= 10) {
+                    players.sort(() => Math.random() - 0.5);
+                    mainPlayers = [tojeongPlayer, ...players.slice(0, 9)];
+                    backupPlayers = players.slice(9);
+					console.log(mainPlayers);
+                } else {
+                    mainPlayers = [tojeongPlayer, ...players];
+					console.log(mainPlayers);
+                }
+                if (mainPlayers.length < 10) {
+                    alert("소환사 협곡 모드는 10명의 플레이어(팀당 5명)가 필요합니다.");
+                    return;
+                }
+                mainPlayers.sort(() => Math.random() - 0.5);
+                const team1players = mainPlayers.slice(0, 5);
+                const team2players = mainPlayers.slice(5, 10);
 
                 const roles1 = assignRoles(team1players);
                 const roles2 = assignRoles(team2players);
@@ -441,30 +464,49 @@
 
                 document.getElementById("blueTeam").innerHTML = renderTeamTable("블루팀", roles1, avg1, "blue-team");
                 document.getElementById("redTeam").innerHTML = renderTeamTable("레드팀", roles2, avg2, "red-team");
-                document.getElementById("candidates").innerHTML = ''; // 후보 초기화
+                document.getElementById("candidates").innerHTML = '';
             } else {
-                // "칼바람 나락" 모드 처리: 지난 번 후보 목록에 있던 플레이어를 강제로 포함
-                let forcedPlayers = players.filter(p => lastCandidates.includes(p.name));
-                // 만약 forcedPlayers가 10명보다 많으면 무작위로 10명 선택
-                if (forcedPlayers.length > 10) {
-                    forcedPlayers.sort(() => Math.random() - 0.5);
-                    forcedPlayers = forcedPlayers.slice(0, 10);
-                }
-                const remainingNeeded = 10 - forcedPlayers.length;
-                // forcedPlayers에 포함되지 않은 나머지 플레이어들 중 무작위 선택
-                const otherPlayers = players.filter(p => !forcedPlayers.some(fp => fp.name === p.name));
-                otherPlayers.sort(() => Math.random() - 0.5);
-                const selectedPlayers = forcedPlayers.concat(otherPlayers.slice(0, remainingNeeded));
-                // 선택되지 않은 플레이어들은 이번 팀 분배의 후보로 지정하고, 그 이름들을 전역 변수에 업데이트
-                const candidatePlayers = players.filter(p => !selectedPlayers.some(sp => sp.name === p.name));
-                lastCandidates = candidatePlayers.map(p => p.name);
+				// "칼바람 나락" 모드: 티어 등은 무시하고 단순 무작위 팀 구성
+				// 우선 players 배열에서 "토정" 플레이어가 반드시 포함되어 있는지 검사 후 분리
+				const tojeongIndex = players.findIndex(p => p.name === "토정");
+				if (tojeongIndex === -1) {
+					alert("플레이어 목록에 '토정'이 없습니다. 첫 번째 플레이어는 반드시 '토정'이어야 합니다.");
+					return;
+				}
+				// "토정" 플레이어 분리 및 제거
+				const tojeongPlayer = players.splice(tojeongIndex, 1)[0];
 
-                const team1players = selectedPlayers.slice(0, 5);
-                const team2players = selectedPlayers.slice(5, 10);
+				// 최소 10명이 있는지 확인 (모드 'B'도 10명 필요)
+				if (players.length < 9) {
+					alert("칼바람 나락 모드는 10명의 플레이어(팀당 5명)가 필요합니다.");
+					return;
+				}
 
-                document.getElementById("blueTeam").innerHTML = renderList("블루팀", team1players, "blue-team");
-                document.getElementById("redTeam").innerHTML = renderList("레드팀", team2players, "red-team");
-                document.getElementById("candidates").innerHTML = renderCandidateList("후보 플레이어", candidatePlayers);
+				// 이전 팀 분배 후보(lastCandidates)를 기반으로 강제 포함할 플레이어 추출
+				let forcedPlayers = players.filter(p => lastCandidates.includes(p.name));
+				if (forcedPlayers.length > 10) {
+					forcedPlayers.sort(() => Math.random() - 0.5);
+					forcedPlayers = forcedPlayers.slice(0, 10);
+				}
+				// remainingNeeded는 음수가 되지 않도록 조정
+				const remainingNeeded = Math.max(0, 9 - forcedPlayers.length);
+				const otherPlayers = players.filter(p => !forcedPlayers.some(fp => fp.name === p.name));
+				otherPlayers.sort(() => Math.random() - 0.5);
+				// 최종 선택된 10명: 첫 번째는 강제로 "토정", 그 후 forcedPlayers와 나머지 from otherPlayers
+				const selectedPlayers = [tojeongPlayer].concat(forcedPlayers, otherPlayers.slice(0, remainingNeeded));
+
+				// 후보 플레이어: 최종 선택되지 않은 나머지 플레이어
+				const candidatePlayers = players.filter(p => !selectedPlayers.some(sp => sp.name === p.name));
+				lastCandidates = candidatePlayers.map(p => p.name);
+
+				// 최종 선택된 10명을 다시 무작위로 섞은 후 팀 분배
+				selectedPlayers.sort(() => Math.random() - 0.5);
+				const team1players = selectedPlayers.slice(0, 5);
+				const team2players = selectedPlayers.slice(5, 10);
+
+				document.getElementById("blueTeam").innerHTML = renderList("블루팀", team1players, "blue-team");
+				document.getElementById("redTeam").innerHTML = renderList("레드팀", team2players, "red-team");
+				document.getElementById("candidates").innerHTML = renderCandidateList("후보 플레이어", candidatePlayers);
             }
 
             document.getElementById("blueTeam").scrollIntoView({ behavior: 'smooth' });
@@ -673,7 +715,7 @@
         <div class="input-group" id="playerInputs">
             <div class="player-input-wrapper">
                 <div class="player-input">
-                    <input type="text" placeholder="이름" class="name">
+                    <input type="text" placeholder="이름" class="name" value="토정" readonly>
                     <select class="primary-role">
                         <option value="">주 라인</option>
                         <option value="탑">탑</option>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>토정 링크 스킬 정리</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #93c5fd, #fbcfe8);
+      color: #1e293b;
+      margin: 0;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 960px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      text-align: center;
+      color: #0f172a;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 2rem;
+      cursor: pointer;
+      padding: 1rem;
+      border-radius: 1rem;
+      background: #f8fafc;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+    li:hover {
+      background-color: #eff6ff;
+      transform: translateY(-2px);
+    }
+    strong {
+      color: #3b82f6;
+      font-size: 1.1rem;
+    }
+    .highlight {
+      color: orange;
+    }
+    .video {
+      display: none;
+      margin-top: 1rem;
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+  <script>
+    function toggleVideo(id) {
+      const videos = document.querySelectorAll('.video');
+      videos.forEach(v => {
+        if (v.id !== id) v.style.display = 'none';
+      });
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === "none" ? "block" : "none";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fas fa-link"></i> 토정 사냥 링크 스킬 정리</h1>
+    <ul>
+      <li onclick="toggleVideo('video1')">
+        <strong>1. 메르세데스</strong> – 엘프의 축복 <span class="highlight">(영구적으로 경험치 15% 추가 획득)</span>
+        <div class="video" id="video1">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=298" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li onclick="toggleVideo('video2')">
+        <strong>2. 에반</strong> – 룬 퍼시스턴스 <span class="highlight">(해방된 룬의 힘 지속시간 50% 증가)</span>
+        <div class="video" id="video2">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=274" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li onclick="toggleVideo('video3')">
+        <strong>3. 아란</strong> – 콤보킬 어드벤티지 <span class="highlight">(콤보킬 구슬 경험치 획득량 650% 추가 획득)</span>
+        <div class="video" id="video3">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=261" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li onclick="toggleVideo('video4')">
+        <strong>4. 데몬어벤져</strong> – 와일드 레이지 <span class="highlight">(데미지 10% 증가)</span>
+        <div class="video" id="video4">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=391" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li onclick="toggleVideo('video5')">
+        <strong>5. 아크</strong> – 무아 <span class="highlight">(전투 상태 유지 시 중첩 데미지 증가)</span>
+        <div class="video" id="video5">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=497" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li onclick="toggleVideo('video6')">
+        <strong>6. 호영</strong> – 자신감 <span class="highlight">(방무 10%, HP 100% 대상 데미지 14% 증가)</span>
+        <div class="video" id="video6">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=519" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li onclick="toggleVideo('video7')">
+        <strong>7. 일리움</strong> – 전투의 흐름 <span class="highlight">(이동 시 중첩 데미지 증가)</span>
+        <div class="video" id="video7">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=476" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li onclick="toggleVideo('video8')">
+        <strong>8. 라라</strong> – 자연의 벗 <span class="highlight">(일반 몬스터 처치 시 강화 효과)</span>
+        <div class="video" id="video8">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=508" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li onclick="toggleVideo('video9')">
+        <strong>9. 키네시스</strong> – 판단 <span class="highlight">(크리티컬 데미지 4% 증가)</span>
+        <div class="video" id="video9">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=455" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li onclick="toggleVideo('video10')">
+        <strong>10. 카인</strong> – 프라이어 프리퍼레이션 <span class="highlight">(조건 충족 시 20초간 데미지 증가)</span>
+        <div class="video" id="video10">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=412" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li onclick="toggleVideo('video11')">
+        <strong>11. 제논</strong> – 하이브리드 로직 <span class="highlight">(모든 능력치 10% 증가)</span>
+        <div class="video" id="video11">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=362" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li onclick="toggleVideo('video12')">
+        <strong>12. 팬텀</strong> – 데블의 인스팅트 <span class="highlight">(크리티컬 확률 15% 증가)</span>
+        <div class="video" id="video12">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=311" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

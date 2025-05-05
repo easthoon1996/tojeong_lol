@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>토정 링크 스킬 정리</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>토정 링크 스킬 정리</title>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+<style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #93c5fd, #fbcfe8);
@@ -61,8 +62,33 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-  </style>
-  <script>
+  
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+      .container {
+        padding: 1rem;
+        border-radius: 1rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      li {
+        padding: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+      strong {
+        font-size: 1rem;
+      }
+      .video iframe {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9;
+      }
+    }
+</style>
+<script>
     function toggleVideo(id) {
       const videos = document.querySelectorAll('.video');
       videos.forEach(v => {
@@ -74,178 +100,178 @@
   </script>
 </head>
 <body>
-  <div class="container">
-    <h1><i class="fas fa-link"></i> 토정 보스 링크 스킬 정리</h1>
-    <ul>
-       <li onclick="toggleVideo('video1')">
-        <strong>1. 데몬어벤져</strong> – 와일드 레이지 <span class="highlight">(데미지 10% 증가)</span>
-        <div class="video" id="video1">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=391" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video2')">
-        <strong>2. 데몬슬레이어</strong> – 데몬스 퓨리 <span class="highlight">(보스 몬스터 공격 시 데미지 15% 증가)</span>
-        <div class="video" id="video2">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=380" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video3')">
-        <strong>3. 루미너스</strong> – 퍼미에이트 <span class="highlight">(적 공격 시 방어율 무시 15% 적용)</span>
-        <div class="video" id="video3">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=290" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video4')">
-        <strong>4. 아크</strong> – 무아 <span class="highlight">(전투 상태가 5초 지속되면 발동되며 최대 5회 중첩 가능, 지속시간 5초, 발동 시 데미지 1% 증가, 각 중첩당 데미지 2% 증가)</span>
-        <div class="video" id="video4">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=497" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video5')">
-        <strong>5. 키네시스</strong> – 판단 <span class="highlight">(크리티컬 데미지 4% 증가)</span>
-        <div class="video" id="video5">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=455" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video6')">
-        <strong>6. 엔젤릭버스터</strong> – 소울 컨트랙트 <span class="highlight">(발동 시 10초 동안 데미지 45% 증가, 재사용 대기시간 90초)</span>
-        <div class="video" id="video6">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=433" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video9')">
-        <strong>7. 카데나</strong> – 인텐시브 인썰트 <span class="highlight">(캐릭터보다 레벨이 낮은 몬스터 공격 시 데미지 6% 증가, 상태 이상에 걸린 몬스터 공격 시 데미지 6% 증가)</span>
-        <div class="video" id="video9">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=424" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video10')">
-        <strong>8. 카인</strong> – 프라이어 프리퍼레이션 <span class="highlight">(적 8명 처치 또는 보스 몬스터에게 5번 공격 적중 시 준비 1회 완료, 5회 시 20초 동안 데미지 17% 증가, 재사용 40초)</span>
-        <div class="video" id="video10">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=412" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video11')">
-        <strong>9. 호영</strong> – 자신감 <span class="highlight">(방어율 무시 10%, HP가 100%인 몬스터 공격 시 데미지 14% 증가)</span>
-        <div class="video" id="video11">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=519" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video12')">
-        <strong>10. 제로</strong> – 륀느의 가호 <span class="highlight">(받는 데미지 15% 감소, 공격 시 대상의 방어율 10% 무시)</span>
-        <div class="video" id="video12">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=440" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video13')">
-        <strong>11. 팬텀</strong> – 데블의 인스팅트 <span class="highlight">(크리티컬 확률 15% 증가)</span>
-        <div class="video" id="video13">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=311" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video14')">
-        <strong>12. 아델</strong> – 노블레스 <span class="highlight">(파티원 1명당 데미지 2% 증가, 최대 8%. 파티 미참여 시 자신만 적용, 보스 공격 시 데미지 4% 증가)</span>
-        <div class="video" id="video14">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=466" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video17')">
-        <strong>13. 칼리 (신직업)</strong> – 이베이셔 기프트 <span class="highlight">(데미지 5% 증가, 공격 시 100% 확률로 5초 동안 매초 최대 HP/MP의 2% 회복, 재발동 대기시간 30초)</span>
-        <div class="video" id="video17">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=488" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-	        <li onclick="toggleVideo('video-nl')">
-        <strong>14. 나이트로드</strong> – 시프커닝 <span class="highlight">(적에게 상태이상을 적용시키면 10초 동안 데미지 6% 증가, 재발동 대기시간 20초)</span>
-        <div class="video" id="video-nl">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=142" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-sh')">
-        <strong>15. 섀도어</strong> – 시프커닝 <span class="highlight">(적에게 상태이상을 적용시키면 10초 동안 데미지 6% 증가, 재발동 대기시간 20초)</span>
-        <div class="video" id="video-sh">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=151" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-db')">
-        <strong>16. 듀얼블레이드</strong> – 시프커닝 <span class="highlight">(적에게 상태이상을 적용시키면 10초 동안 데미지 6% 증가, 재발동 대기시간 20초)</span>
-        <div class="video" id="video-db">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=159" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-fp')">
-        <strong>17. 아크메이지(불독)</strong> – 임피리컬 널리지 <span class="highlight">(공격한 적 중 최대 HP가 가장 높은 적에 대한 약점을 17% 확률로 파악, 파악한 약점은 10초 동안 지속되며 최대 3회까지 중첩, 중첩 당 데미지 1%, 방어율 무시 1% 증가)</span>
-        <div class="video" id="video-fp">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=78" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-cl')">
-        <strong>18. 아크메이지(썬콜)</strong> – 임피리컬 널리지 <span class="highlight">(공격한 적 중 최대 HP가 가장 높은 적에 대한 약점을 17% 확률로 파악, 파악한 약점은 10초 동안 지속되며 최대 3회까지 중첩, 중첩 당 데미지 1%, 방어율 무시 1% 증가)</span>
-        <div class="video" id="video-cl">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=89" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-bishop')">
-        <strong>19. 비숍</strong> – 임피리컬 널리지 <span class="highlight">(공격한 적 중 최대 HP가 가장 높은 적에 대한 약점을 17% 확률로 파악, 파악한 약점은 10초 동안 지속되며 최대 3회까지 중첩, 중첩 당 데미지 1%, 방어율 무시 1% 증가)</span>
-        <div class="video" id="video-bishop">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=98" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-striker')">
-        <strong>20. 스트라이커</strong> – 시그너스 블레스 <span class="highlight">(공격력과 마력 9, 상태 이상 내성 3, 모든 속성 내성 3% 증가)</span>
-        <div class="video" id="video-striker">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=253" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-fw')">
-        <strong>21. 플레임위자드</strong> – 시그너스 블레스 <span class="highlight">(공격력과 마력 9, 상태 이상 내성 3, 모든 속성 내성 3% 증가)</span>
-        <div class="video" id="video-fw">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=221" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-nw')">
-        <strong>22. 나이트워커</strong> – 시그너스 블레스 <span class="highlight">(공격력과 마력 9, 상태 이상 내성 3, 모든 속성 내성 3% 증가)</span>
-        <div class="video" id="video-nw">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=243" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-wb')">
-        <strong>23. 윈드브레이커</strong> – 시그너스 블레스 <span class="highlight">(공격력과 마력 9, 상태 이상 내성 3, 모든 속성 내성 3% 증가)</span>
-        <div class="video" id="video-wb">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=233" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-sm')">
-        <strong>24. 소울마스터</strong> – 시그너스 블레스 <span class="highlight">(공격력과 마력 9, 상태 이상 내성 3, 모든 속성 내성 3% 증가)</span>
-        <div class="video" id="video-sm">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=212" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-blaster')">
-        <strong>25. 블래스터</strong> – 스피릿 오브 프리덤 <span class="highlight">(부활 시 2초 동안 피해를 받지 않는다.)</span>
-        <div class="video" id="video-blaster">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=329" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-bm')">
-        <strong>27. 배틀메이지</strong> – 스피릿 오브 프리덤 <span class="highlight">(부활 시 2초 동안 피해를 받지 않는다.)</span>
-        <div class="video" id="video-bm">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=342" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-wh')">
-        <strong>28. 와일드헌터</strong> – 스피릿 오브 프리덤 <span class="highlight">(부활 시 2초 동안 피해를 받지 않는다.)</span>
-        <div class="video" id="video-wh">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=354" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-      <li onclick="toggleVideo('video-mech')">
-        <strong>29. 메카닉</strong> – 스피릿 오브 프리덤 <span class="highlight">(부활 시 2초 동안 피해를 받지 않는다.)</span>
-        <div class="video" id="video-mech">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=371" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </li>
-    </ul>
-  </div>
+<div class="container">
+<h1><i class="fas fa-link"></i> 토정 보스 링크 스킬 정리</h1>
+<ul>
+<li onclick="toggleVideo('video1')">
+<strong>1. 데몬어벤져</strong> – 와일드 레이지 <span class="highlight">(데미지 10% 증가)</span>
+<div class="video" id="video1">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=391" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video2')">
+<strong>2. 데몬슬레이어</strong> – 데몬스 퓨리 <span class="highlight">(보스 몬스터 공격 시 데미지 15% 증가)</span>
+<div class="video" id="video2">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=380" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video3')">
+<strong>3. 루미너스</strong> – 퍼미에이트 <span class="highlight">(적 공격 시 방어율 무시 15% 적용)</span>
+<div class="video" id="video3">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=290" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video4')">
+<strong>4. 아크</strong> – 무아 <span class="highlight">(전투 상태가 5초 지속되면 발동되며 최대 5회 중첩 가능, 지속시간 5초, 발동 시 데미지 1% 증가, 각 중첩당 데미지 2% 증가)</span>
+<div class="video" id="video4">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=497" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video5')">
+<strong>5. 키네시스</strong> – 판단 <span class="highlight">(크리티컬 데미지 4% 증가)</span>
+<div class="video" id="video5">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=455" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video6')">
+<strong>6. 엔젤릭버스터</strong> – 소울 컨트랙트 <span class="highlight">(발동 시 10초 동안 데미지 45% 증가, 재사용 대기시간 90초)</span>
+<div class="video" id="video6">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=433" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video9')">
+<strong>7. 카데나</strong> – 인텐시브 인썰트 <span class="highlight">(캐릭터보다 레벨이 낮은 몬스터 공격 시 데미지 6% 증가, 상태 이상에 걸린 몬스터 공격 시 데미지 6% 증가)</span>
+<div class="video" id="video9">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=424" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video10')">
+<strong>8. 카인</strong> – 프라이어 프리퍼레이션 <span class="highlight">(적 8명 처치 또는 보스 몬스터에게 5번 공격 적중 시 준비 1회 완료, 5회 시 20초 동안 데미지 17% 증가, 재사용 40초)</span>
+<div class="video" id="video10">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=412" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video11')">
+<strong>9. 호영</strong> – 자신감 <span class="highlight">(방어율 무시 10%, HP가 100%인 몬스터 공격 시 데미지 14% 증가)</span>
+<div class="video" id="video11">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=519" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video12')">
+<strong>10. 제로</strong> – 륀느의 가호 <span class="highlight">(받는 데미지 15% 감소, 공격 시 대상의 방어율 10% 무시)</span>
+<div class="video" id="video12">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=440" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video13')">
+<strong>11. 팬텀</strong> – 데블의 인스팅트 <span class="highlight">(크리티컬 확률 15% 증가)</span>
+<div class="video" id="video13">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=311" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video14')">
+<strong>12. 아델</strong> – 노블레스 <span class="highlight">(파티원 1명당 데미지 2% 증가, 최대 8%. 파티 미참여 시 자신만 적용, 보스 공격 시 데미지 4% 증가)</span>
+<div class="video" id="video14">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=466" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video17')">
+<strong>13. 칼리 (신직업)</strong> – 이베이셔 기프트 <span class="highlight">(데미지 5% 증가, 공격 시 100% 확률로 5초 동안 매초 최대 HP/MP의 2% 회복, 재발동 대기시간 30초)</span>
+<div class="video" id="video17">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=488" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-nl')">
+<strong>14. 나이트로드</strong> – 시프커닝 <span class="highlight">(적에게 상태이상을 적용시키면 10초 동안 데미지 6% 증가, 재발동 대기시간 20초)</span>
+<div class="video" id="video-nl">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=142" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-sh')">
+<strong>15. 섀도어</strong> – 시프커닝 <span class="highlight">(적에게 상태이상을 적용시키면 10초 동안 데미지 6% 증가, 재발동 대기시간 20초)</span>
+<div class="video" id="video-sh">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=151" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-db')">
+<strong>16. 듀얼블레이드</strong> – 시프커닝 <span class="highlight">(적에게 상태이상을 적용시키면 10초 동안 데미지 6% 증가, 재발동 대기시간 20초)</span>
+<div class="video" id="video-db">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=159" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-fp')">
+<strong>17. 아크메이지(불독)</strong> – 임피리컬 널리지 <span class="highlight">(공격한 적 중 최대 HP가 가장 높은 적에 대한 약점을 17% 확률로 파악, 파악한 약점은 10초 동안 지속되며 최대 3회까지 중첩, 중첩 당 데미지 1%, 방어율 무시 1% 증가)</span>
+<div class="video" id="video-fp">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=78" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-cl')">
+<strong>18. 아크메이지(썬콜)</strong> – 임피리컬 널리지 <span class="highlight">(공격한 적 중 최대 HP가 가장 높은 적에 대한 약점을 17% 확률로 파악, 파악한 약점은 10초 동안 지속되며 최대 3회까지 중첩, 중첩 당 데미지 1%, 방어율 무시 1% 증가)</span>
+<div class="video" id="video-cl">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=89" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-bishop')">
+<strong>19. 비숍</strong> – 임피리컬 널리지 <span class="highlight">(공격한 적 중 최대 HP가 가장 높은 적에 대한 약점을 17% 확률로 파악, 파악한 약점은 10초 동안 지속되며 최대 3회까지 중첩, 중첩 당 데미지 1%, 방어율 무시 1% 증가)</span>
+<div class="video" id="video-bishop">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=98" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-striker')">
+<strong>20. 스트라이커</strong> – 시그너스 블레스 <span class="highlight">(공격력과 마력 9, 상태 이상 내성 3, 모든 속성 내성 3% 증가)</span>
+<div class="video" id="video-striker">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=253" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-fw')">
+<strong>21. 플레임위자드</strong> – 시그너스 블레스 <span class="highlight">(공격력과 마력 9, 상태 이상 내성 3, 모든 속성 내성 3% 증가)</span>
+<div class="video" id="video-fw">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=221" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-nw')">
+<strong>22. 나이트워커</strong> – 시그너스 블레스 <span class="highlight">(공격력과 마력 9, 상태 이상 내성 3, 모든 속성 내성 3% 증가)</span>
+<div class="video" id="video-nw">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=243" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-wb')">
+<strong>23. 윈드브레이커</strong> – 시그너스 블레스 <span class="highlight">(공격력과 마력 9, 상태 이상 내성 3, 모든 속성 내성 3% 증가)</span>
+<div class="video" id="video-wb">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=233" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-sm')">
+<strong>24. 소울마스터</strong> – 시그너스 블레스 <span class="highlight">(공격력과 마력 9, 상태 이상 내성 3, 모든 속성 내성 3% 증가)</span>
+<div class="video" id="video-sm">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=212" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-blaster')">
+<strong>25. 블래스터</strong> – 스피릿 오브 프리덤 <span class="highlight">(부활 시 2초 동안 피해를 받지 않는다.)</span>
+<div class="video" id="video-blaster">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=329" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-bm')">
+<strong>27. 배틀메이지</strong> – 스피릿 오브 프리덤 <span class="highlight">(부활 시 2초 동안 피해를 받지 않는다.)</span>
+<div class="video" id="video-bm">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=342" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-wh')">
+<strong>28. 와일드헌터</strong> – 스피릿 오브 프리덤 <span class="highlight">(부활 시 2초 동안 피해를 받지 않는다.)</span>
+<div class="video" id="video-wh">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=354" width="560"></iframe>
+</div>
+</li>
+<li onclick="toggleVideo('video-mech')">
+<strong>29. 메카닉</strong> – 스피릿 오브 프리덤 <span class="highlight">(부활 시 2초 동안 피해를 받지 않는다.)</span>
+<div class="video" id="video-mech">
+<iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/7XH_hnC_jP4?start=371" width="560"></iframe>
+</div>
+</li>
+</ul>
+</div>
 </body>
 </html>

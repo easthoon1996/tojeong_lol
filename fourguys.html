@@ -142,7 +142,8 @@
     </div>
     <button onclick="addInput()"><i class="fas fa-user-plus"></i> 이름 추가</button>
     <button onclick="runSpinner()"><i class="fas fa-dice"></i> 4명 뽑기</button>
-
+	<button onclick="forceAddCandidates()"><i class="fas fa-user-check"></i> 후보 강제 추가</button>
+	<button onclick="resetCandidates()" style="background: #ef4444;"><i class="fas fa-trash-alt"></i> 후보 목록 초기화</button>
     <div class="result">
       <div class="box">
         <h2><i class="fas fa-check-circle"></i> 뽑힌 사람</h2>
@@ -156,6 +157,32 @@
   </div>
 
 <script>
+function resetCandidates() {
+  if (confirm('후보 목록을 정말 초기화하시겠습니까?')) {
+    localStorage.removeItem('candidates');
+    document.getElementById('candidateList').innerHTML = '';
+    alert('후보 목록이 초기화되었습니다.');
+  }
+}
+
+function forceAddCandidates() {
+  const inputs = document.querySelectorAll('.user-input');
+  let inputNames = Array.from(inputs).map(el => el.value.trim()).filter(Boolean);
+
+  let existing = JSON.parse(localStorage.getItem('candidates') || '[]');
+  let combined = [...new Set([...existing, ...inputNames])]; // 중복 제거
+
+  localStorage.setItem('candidates', JSON.stringify(combined));
+
+  alert('후보 명단에 추가되었습니다!');
+  updateCandidateList(combined);
+}
+
+function updateCandidateList(list) {
+  const candidateList = document.getElementById('candidateList');
+  candidateList.innerHTML = list.map(name => `<li>${name}</li>`).join('');
+}
+
 function addInput() {
   const wrapper = document.getElementById('inputWrapper');
   const input = document.createElement('input');

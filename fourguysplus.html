@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>토정의 랜덤 4명 뽑기</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #93c5fd, #fbcfe8);
+      color: #1e293b;
+      margin: 0;
+      padding: 2rem;
+      min-height: 100vh;
+      background-attachment: fixed;
+      background-size: cover;
+      text-align: center;
+    }
+    .container {
+      max-width: 960px;
+      margin: auto;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 1s ease;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #0f172a;
+    }
+    .input-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .input-wrapper input {
+      width: 70%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 0.75rem;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .input-wrapper input:focus {
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+      outline: none;
+      border-color: #3b82f6;
+    }
+    button {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 0.75rem;
+      background: linear-gradient(to right, #3b82f6, #6366f1);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 0.25rem;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(to right, #2563eb, #4f46e5);
+      transform: translateY(-3px) scale(1.02);
+    }
+    .result {
+      margin-top: 2rem;
+    }
+    .box {
+      background: #f8fafc;
+      padding: 1rem;
+      margin: 1rem auto;
+      width: 80%;
+      border-radius: 1.5rem;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      font-size: 1.5rem;
+      color: #1e40af;
+      margin-bottom: 1rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: white;
+      margin: 0.5rem auto;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      max-width: 300px;
+    }
+    #loadingOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      flex-direction: column;
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.75; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="loadingOverlay">
+    <img src="./images/LoL_Icon_Rendered_Hi-Res.png" alt="로딩" style="width:80px; height:80px; margin-bottom:1rem; animation: pulse 1.5s infinite;">
+    <p style="font-size:1.75rem; font-weight:bold; color:#1e3a8a; animation: fadeInUp 1s ease;">선택 중...</p>
+  </div>
+
+  <div class="container">
+    <h1><i class="fas fa-random"></i> 토정의 랜덤 4명 뽑기</h1>
+    <p>사용자 이름을 입력하세요.</p>
+
+    <div class="input-wrapper" id="inputWrapper">
+      <input type="text" class="user-input" placeholder="이름 입력" autocomplete="on">
+      <input type="text" class="user-input" placeholder="이름 입력" autocomplete="on">
+      <input type="text" class="user-input" placeholder="이름 입력" autocomplete="on">
+      <input type="text" class="user-input" placeholder="이름 입력" autocomplete="on">
+    </div>
+    <button onclick="addInput()"><i class="fas fa-user-plus"></i> 이름 추가</button>
+    <button onclick="runSpinner()"><i class="fas fa-dice"></i> 4명 뽑기</button>
+	<button onclick="resetCandidates()" style="background: #ef4444;"><i class="fas fa-trash-alt"></i> 후보 목록 초기화</button>
+    <div class="result">
+      <div class="box">
+        <h2><i class="fas fa-check-circle"></i> 뽑힌 사람</h2>
+        <ul id="selectedList"></ul>
+      </div>
+      <div class="box">
+		  <h2><i class="fas fa-hourglass-half"></i> 후보 명단</h2>
+		  <ul id="candidateList"></ul>
+		  <div style="margin-top: 1rem;">
+			<input type="text" id="candidateInput" placeholder="후보 이름 입력" style="padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #cbd5e1;">
+			<button onclick="addCandidateDirectly()" style="margin-left: 0.5rem;"><i class="fas fa-plus-circle"></i> 추가</button>
+		  </div>
+	   </div>
+    </div>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const stored = JSON.parse(localStorage.getItem('candidates') || '[]');
+  updateCandidateList(stored);
+});
+
+function addCandidateDirectly() {
+  const input = document.getElementById('candidateInput');
+  const name = input.value.trim();
+  if (!name) return alert('이름을 입력하세요.');
+
+  let existing = JSON.parse(localStorage.getItem('candidates') || '[]');
+  if (!existing.includes(name)) {
+    existing.push(name);
+    localStorage.setItem('candidates', JSON.stringify(existing));
+    updateCandidateList(existing);
+    input.value = '';
+  } else {
+    alert('이미 후보에 존재합니다.');
+  }
+}
+
+
+function resetCandidates() {
+  if (confirm('후보 목록을 정말 초기화하시겠습니까?')) {
+    localStorage.removeItem('candidates');
+    document.getElementById('candidateList').innerHTML = '';
+    alert('후보 목록이 초기화되었습니다.');
+  }
+}
+
+function forceAddCandidates() {
+  const inputs = document.querySelectorAll('.user-input');
+  let inputNames = Array.from(inputs).map(el => el.value.trim()).filter(Boolean);
+
+  let existing = JSON.parse(localStorage.getItem('candidates') || '[]');
+  let combined = [...new Set([...existing, ...inputNames])]; // 중복 제거
+
+  localStorage.setItem('candidates', JSON.stringify(combined));
+
+  alert('후보 명단에 추가되었습니다!');
+  updateCandidateList(combined);
+}
+
+function updateCandidateList(list) {
+  const candidateList = document.getElementById('candidateList');
+  candidateList.innerHTML = list.map((name, index) => `
+    <li>
+      ${name}
+      <button onclick="removeCandidate(${index})"
+        style="margin-left: 1rem; background: none; border: none; color: #dc2626; cursor: pointer;"
+        title="삭제">
+        <i class="fas fa-trash-alt"></i>
+      </button>
+    </li>
+  `).join('');
+}
+
+function removeCandidate(index) {
+  let candidates = JSON.parse(localStorage.getItem('candidates') || '[]');
+  candidates.splice(index, 1); // 해당 인덱스 삭제
+  localStorage.setItem('candidates', JSON.stringify(candidates));
+  updateCandidateList(candidates);
+}
+
+function addInput() {
+  const wrapper = document.getElementById('inputWrapper');
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'user-input';
+  input.placeholder = '이름 입력';
+  input.autocomplete = 'on';
+  wrapper.appendChild(input);
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function runSpinner() {
+  document.getElementById('loadingOverlay').style.display = 'flex';
+  setTimeout(() => {
+    document.getElementById('loadingOverlay').style.display = 'none';
+    pickUsers();
+  }, 1500);
+}
+
+function removeFromSelected(name) {
+  let candidates = JSON.parse(localStorage.getItem('candidates') || '[]');
+  // 삭제 후 다시 후보에 넣기
+  if (!candidates.includes(name)) {
+    candidates.push(name);
+    localStorage.setItem('candidates', JSON.stringify(candidates));
+    updateCandidateList(candidates);
+  }
+
+  // 화면에서 삭제
+  const selectedList = document.getElementById('selectedList');
+  selectedList.innerHTML = Array.from(selectedList.children)
+    .filter(li => !li.textContent.includes(name))
+    .map(li => li.outerHTML).join('');
+}
+
+function pickUsers() {
+  const inputs = document.querySelectorAll('.user-input');
+  let allUsers = Array.from(inputs).map(el => el.value.trim()).filter(Boolean);
+
+  let storedCandidates = JSON.parse(localStorage.getItem('candidates') || '[]');
+  let remaining = allUsers.filter(u => !storedCandidates.includes(u));
+
+  let selected = [];
+  if (storedCandidates.length >= 4) {
+    selected = storedCandidates.slice(0, 4);
+    storedCandidates = storedCandidates.slice(4);
+  } else {
+    selected = [...storedCandidates];
+    let needed = 4 - selected.length;
+    let shuffled = shuffle(remaining);
+    selected = selected.concat(shuffled.slice(0, needed));
+    storedCandidates = shuffled.slice(needed);
+  }
+
+  let nextCandidates = allUsers.filter(u => !selected.includes(u));
+  localStorage.setItem('candidates', JSON.stringify(nextCandidates));
+
+  const selectedList = document.getElementById('selectedList');
+  const candidateList = document.getElementById('candidateList');
+
+  selectedList.innerHTML = selected.map(name => `
+  <li>${name}</li>
+`).join('');
+  
+  
+  updateCandidateList(nextCandidates);
+}
+</script>
+</body>
+</html>
